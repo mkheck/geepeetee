@@ -27,4 +27,9 @@ public class GeePeeTeeController {
             return Flux.empty();
         }
     }
+
+    @GetMapping("/ping")
+    public String pingpong() {
+        return "pong";
+    }
 }

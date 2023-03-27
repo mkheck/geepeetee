@@ -20,7 +20,8 @@ data "azurerm_client_config" "current" {}
 
 resource "azurerm_resource_group" "geepeetee" {
   location = var.location
-  name     = "mkheck-geepeetee-rg"
+#  name     = "${var.rootname}-rg"
+  name     = "${var.rootname}-rg"
 
   tags = {
     "Terraform" = "true"
@@ -28,7 +29,7 @@ resource "azurerm_resource_group" "geepeetee" {
 }
 
 resource "azurerm_service_plan" "geepeetee" {
-  name                = "mkheck-geepeetee-plan"
+  name                = "${var.rootname}-plan"
   resource_group_name = azurerm_resource_group.geepeetee.name
   location            = azurerm_resource_group.geepeetee.location
   os_type             = "Linux"
@@ -36,7 +37,7 @@ resource "azurerm_service_plan" "geepeetee" {
 }
 
 resource "azurerm_linux_web_app" "geepeetee" {
-  name                = "mkheck-geepeetee-app"
+  name                = "${var.rootname}-app"
   resource_group_name = azurerm_resource_group.geepeetee.name
   location            = azurerm_service_plan.geepeetee.location
   service_plan_id     = azurerm_service_plan.geepeetee.id
@@ -61,7 +62,7 @@ resource "azurerm_linux_web_app" "geepeetee" {
 }
 
 resource "azurerm_key_vault" "geepeetee" {
-  name                        = "mkheck-geepeetee-kv"
+  name                        = "${var.rootname}-kv"
   location                    = azurerm_resource_group.geepeetee.location
   resource_group_name         = azurerm_resource_group.geepeetee.name
   enabled_for_disk_encryption = true
